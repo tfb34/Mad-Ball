@@ -6,6 +6,7 @@ Direct3D:
     Vendor:   Intel
     VRAM:     912 MB
 Begin MonoManager ReloadAssembly
+<<<<<<< HEAD
 Platform assembly: F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\Assembly-CSharp.dll (this message is harmless)
@@ -17,11 +18,30 @@ Loading F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.Networking.
 - Completed reload, in  0.078 seconds
 Platform assembly: F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: F:\Unity Projects\Mad-Ball\Mad Ball_Data\Managed\System.dll (this message is harmless)
+=======
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.150 seconds
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Thalia\Desktop\Mad-Ball\Mad Ball_Data\Managed\System.dll (this message is harmless)
+>>>>>>> 03ea72073e9762fbf6f88a27e4325d9081f49d43
 desktop: 1366x768 50Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found. Trying XInput9_1_0.dll instead...
 <RI> Input initialized.
 <RI> Initialized touch support.
+<<<<<<< HEAD
 UnloadTime: 0.654706 ms
 Setting up 1 worker threads for Enlighten.
   Thread -> id: 2be0 -> priority: 1 
+=======
+UnloadTime: 0.754773 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 29d4 -> priority: 1 
+>>>>>>> 03ea72073e9762fbf6f88a27e4325d9081f49d43
