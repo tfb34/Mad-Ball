@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+
 public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
     private Renderer rend;
@@ -14,7 +15,17 @@ public class PlayerController : MonoBehaviour {
     public Text score;
     public Text winText;
     public GameObject gameOverMenu;
-    
+	public Text countDown;
+	public float timer = 99;
+	const int maxTime = 99;
+	private int numDiamonds = 30; //31 including the bonus diamond
+	public GameObject congratsMenu;
+	public Text finalScore;
+	public GameObject mainCamera;
+	public Text gameOverFinalScore;
+	public Text diamondsLeft;
+	public InputField playerInputField;
+	public Button enterNameButton;
 
     void Start()
     {
@@ -25,8 +36,8 @@ public class PlayerController : MonoBehaviour {
         rend = GetComponent<Renderer>();
         colors = new Color[] {Color.red,Color.black,Color.gray };
         hurtAudio = GetComponent<AudioSource>();
-
-        count = 42;
+		enterNameButton.onClick.AddListener(savePlayerName);
+        count = 30;//46,30
         purse = 0;
         setScore();
         winText.text = "";
@@ -39,6 +50,17 @@ public class PlayerController : MonoBehaviour {
         Vector3 movement = new Vector3(moveHorizontal,0.0f,moveVertical);
         rb.AddForce(movement*speed);
     }
+	// gameOver everytime
+	void Update(){
+		timer -= Time.deltaTime;
+		countDown.text = timer.ToString ("f0");
+		if (timer <= 0) {
+			Time.timeScale = 0;
+			lowerMusic();
+			gameOverMenu.SetActive (true);
+		}
+	}
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("pickUp"))
@@ -55,26 +77,68 @@ public class PlayerController : MonoBehaviour {
             setScore();
         }
     }
+
     void setScore()//needs adjustment
     {
+		print ("count: "+count);
         if (count == 0)
         {
-            winText.text = "No life! But good job";
-
+			lowerMusic ();
+			Time.timeScale = 0;
+			congratsMenu.SetActive (true);
+			int time = calculateScore ();
+			//set best players score
+			if (PlayerPrefs.GetInt ("bestScore") ==0 || time < PlayerPrefs.GetInt ("bestScore")) {
+				finalScore.text = "Record Time " + time+"s";
+				playerInputField.gameObject.SetActive(true);
+				enterNameButton.gameObject.SetActive(true);
+			} else {
+				finalScore.text = time.ToString()+"s";
+				playerInputField.gameObject.SetActive(false);
+				enterNameButton.gameObject.SetActive(false);
+			}
+			evaluateScore (time);
         }
-        else if (purse < 0)
+        else if (purse < 0)//gameOver
         {
-            //stop game
-            //activate menu
+			lowerMusic ();
             gameOverMenu.SetActive(true);
             Time.timeScale = 0;
         }
-        else
+		else
         {
-            score.text = "Score : " + purse.ToString();
+			score.text = "Collected " + purse+" / "+ numDiamonds;
+			diamondsLeft.text = "Left: " + count;
+			print (numDiamonds);
         }
     }
-   void OnCollisionEnter(Collision collision)
+
+	// only called when player has collected all coins
+	void evaluateScore(int time){
+		if (PlayerPrefs.GetInt ("bestScore") == 0 || (PlayerPrefs.GetInt ("bestScore") > time) ) {
+			PlayerPrefs.SetInt ("bestScore", time);// int
+			PlayerPrefs.SetString ("timeString", (maxTime - timer).ToString("f0"));//string
+		}
+			
+	}
+
+	void savePlayerName(){
+		if (playerInputField.text == null)
+			PlayerPrefs.SetString ("playerName", "Anonymous");
+		else {
+			PlayerPrefs.SetString ("playerName", playerInputField.text);
+		}
+	}
+
+	int calculateScore(){
+		return (int)(maxTime-timer);
+	}
+
+	void lowerMusic(){
+		mainCamera.GetComponent<AudioSource> ().volume = 0.2f;
+	}
+
+   	void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("enemy"))
         {
@@ -82,8 +146,6 @@ public class PlayerController : MonoBehaviour {
             purse = purse - 3;
             setScore();
             StartCoroutine(hurt());
-            
-            //rend.material.color = Color.white;
         }
     }
     IEnumerator hurt()
